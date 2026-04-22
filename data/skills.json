@@ -1,0 +1,20 @@
+{
+  "categories": [
+    {
+      "category": "Programming Languages",
+      "skills": ["JavaScript", "TypeScript", "Python", "Java", "C++", "SQL"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "skills": ["React", "Next.js", "Node.js", "Express", "Django", "Material-UI", "Framer Motion"]
+    },
+    {
+      "category": "Tools & Platforms",
+      "skills": ["Git", "Docker", "AWS", "PostgreSQL", "MongoDB", "Redis", "GitHub Actions"]
+    },
+    {
+      "category": "Other Skills",
+      "skills": ["RESTful APIs", "GraphQL", "CI/CD", "Agile", "TDD", "System Design", "Code Review"]
+    }
+  ]
+}

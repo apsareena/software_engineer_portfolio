@@ -1,0 +1,22 @@
+{
+  "education": [
+    {
+      "id": "edu-1",
+      "institution": "University of Technology",
+      "degree": "Bachelor of Science",
+      "fieldOfStudy": "Computer Science",
+      "startYear": 2015,
+      "endYear": 2019,
+      "gpa": "3.8/4.0",
+      "honors": "Magna Cum Laude",
+      "relevantCoursework": [
+        "Data Structures & Algorithms",
+        "Database Systems",
+        "Software Engineering",
+        "Machine Learning",
+        "Operating Systems",
+        "Computer Networks"
+      ]
+    }
+  ]
+}

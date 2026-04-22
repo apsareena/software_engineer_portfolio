@@ -1,0 +1,79 @@
+/**
+ * globals.css: Global CSS styles
+ *
+ * Sets the base font imports (Google Fonts), CSS resets, and global
+ * default styles that apply to the entire application.
+ *
+ * Used by: app/layout.tsx (imported automatically by Next.js)
+ */
+
+/* Google Fonts – loaded via @import for SSR compatibility */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;500;600;700&display=swap');
+
+/* ─── CSS Reset ───────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Base Styles ─────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Inter', 'Open Sans', sans-serif;
+  background-color: #ffffff;
+  color: #212529;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Scrollbar Styling ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #adb5bd;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6c757d;
+}
+
+/* ─── Focus Styles (accessibility) ───────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #1abc9c;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ─── Image Defaults ──────────────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─── Link Defaults ───────────────────────────────────────────────────────── */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ─── Smooth section transitions ─────────────────────────────────────────── */
+section {
+  position: relative;
+}

@@ -1,0 +1,79 @@
+{
+  "projects": [
+    {
+      "id": "proj-1",
+      "title": "E-Commerce Platform",
+      "shortDescription": "A full-featured e-commerce platform with real-time inventory management and payment processing. Handles thousands of products with sub-second page loads.",
+      "fullDescription": "Built a comprehensive e-commerce solution from scratch, handling thousands of products and processing secure payments. Implemented real-time inventory tracking, user authentication, and an admin dashboard with analytics. The platform serves over 5,000 active users monthly with 99.9% uptime.",
+      "image": "/images/projects/ecommerce.png",
+      "technologies": ["Next.js", "TypeScript", "Stripe", "PostgreSQL", "Redis", "Docker"],
+      "features": [
+        "Real-time inventory management with WebSocket updates",
+        "Secure payment processing with Stripe",
+        "Admin dashboard with sales analytics",
+        "Responsive design for all devices",
+        "Email notification system"
+      ],
+      "challenges": "Optimising database queries for large product catalogs while maintaining sub-second page loads required implementing Redis caching and database indexing strategies.",
+      "githubUrl": "https://github.com/alexjohnson/ecommerce-platform",
+      "liveUrl": "https://ecommerce-demo.vercel.app",
+      "featured": true
+    },
+    {
+      "id": "proj-2",
+      "title": "Task Management App",
+      "shortDescription": "A collaborative task management application with real-time updates, drag-and-drop boards, and team workspaces. Inspired by Trello and Jira.",
+      "fullDescription": "Developed a full-stack task management application supporting team collaboration. Features include Kanban boards with drag-and-drop, real-time synchronisation across clients, role-based access control, and integration with Slack for notifications.",
+      "image": "/images/projects/taskmanager.png",
+      "technologies": ["React", "Node.js", "Socket.io", "MongoDB", "Express", "JWT"],
+      "features": [
+        "Drag-and-drop Kanban boards",
+        "Real-time updates via WebSockets",
+        "Team workspaces and role management",
+        "File attachments and comments",
+        "Slack integration for notifications"
+      ],
+      "challenges": "Implementing conflict resolution for simultaneous edits by multiple users required a careful operational transformation approach on the server side.",
+      "githubUrl": "https://github.com/alexjohnson/task-manager",
+      "liveUrl": "https://taskapp-demo.vercel.app",
+      "featured": true
+    },
+    {
+      "id": "proj-3",
+      "title": "Weather Dashboard",
+      "shortDescription": "An interactive weather dashboard that displays current conditions, 7-day forecasts, and historical weather data with beautiful data visualisations.",
+      "fullDescription": "Built a weather dashboard consuming multiple public APIs to provide accurate forecasts, hourly breakdowns, and historical trends. Features interactive charts, city search with autocomplete, and location-based weather detection.",
+      "image": "/images/projects/weather.png",
+      "technologies": ["React", "TypeScript", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      "features": [
+        "Real-time weather data from OpenWeather API",
+        "7-day and hourly forecasts",
+        "Interactive charts for temperature and precipitation",
+        "City search with autocomplete",
+        "Geolocation-based weather detection"
+      ],
+      "challenges": "Handling rate limits from multiple weather APIs gracefully while keeping data fresh required an intelligent caching and fallback strategy.",
+      "githubUrl": "https://github.com/alexjohnson/weather-dashboard",
+      "liveUrl": "https://weather-demo.vercel.app",
+      "featured": false
+    },
+    {
+      "id": "proj-4",
+      "title": "Developer Portfolio Generator",
+      "shortDescription": "A CLI tool that generates customisable developer portfolio websites from a simple JSON configuration file. Supports multiple themes and deployment targets.",
+      "fullDescription": "Created an open-source CLI tool that allows developers to generate professional portfolio websites without writing code. Users provide a JSON config file and the tool generates a full Next.js application with their chosen theme.",
+      "image": "/images/projects/portfolio-gen.png",
+      "technologies": ["Node.js", "TypeScript", "Next.js", "Handlebars", "npm"],
+      "features": [
+        "JSON-driven configuration",
+        "Multiple built-in themes",
+        "One-command deployment to Vercel",
+        "Custom domain support",
+        "SEO optimisation out of the box"
+      ],
+      "challenges": "Designing a flexible but opinionated template system that works for a wide variety of portfolio content without requiring users to touch code.",
+      "githubUrl": "https://github.com/alexjohnson/portfolio-generator",
+      "featured": false
+    }
+  ]
+}

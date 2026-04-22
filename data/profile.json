@@ -1,0 +1,20 @@
+{
+  "name": "Alex Johnson",
+  "titles": [
+    "Software Engineer",
+    "Full-Stack Developer",
+    "Problem Solver"
+  ],
+  "tagline": "I also love to hike, play guitar, and explore new technologies.",
+  "profileImage": "/images/profile.jpg",
+  "ctaButtons": [
+    {
+      "text": "View My Work",
+      "link": "#projects"
+    },
+    {
+      "text": "Contact Me",
+      "link": "#contact"
+    }
+  ]
+}

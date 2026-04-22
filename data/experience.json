@@ -1,0 +1,48 @@
+{
+  "experiences": [
+    {
+      "id": "exp-1",
+      "company": "Tech Company Inc.",
+      "position": "Senior Software Engineer",
+      "location": "San Francisco, CA",
+      "startDate": "2022-01",
+      "endDate": null,
+      "description": [
+        "Led development of microservices architecture serving 1M+ users",
+        "Mentored a team of 5 junior developers, conducting weekly code reviews",
+        "Reduced API response time by 40% through query optimisation and caching",
+        "Architected and delivered 3 major feature releases on schedule"
+      ],
+      "technologies": ["React", "Node.js", "PostgreSQL", "AWS", "Docker", "Redis"]
+    },
+    {
+      "id": "exp-2",
+      "company": "Startup XYZ",
+      "position": "Full-Stack Developer",
+      "location": "Remote",
+      "startDate": "2020-06",
+      "endDate": "2021-12",
+      "description": [
+        "Built and deployed 3 client-facing web applications from scratch",
+        "Implemented CI/CD pipeline reducing deployment time by 60%",
+        "Collaborated directly with product team to define technical requirements",
+        "Integrated third-party APIs including Stripe and Twilio"
+      ],
+      "technologies": ["Vue.js", "Express", "MongoDB", "Heroku", "Stripe"]
+    },
+    {
+      "id": "exp-3",
+      "company": "Digital Agency Co.",
+      "position": "Junior Web Developer",
+      "location": "New York, NY",
+      "startDate": "2019-01",
+      "endDate": "2020-05",
+      "description": [
+        "Developed responsive websites for 10+ clients across various industries",
+        "Maintained and improved legacy codebases, fixing critical bugs",
+        "Participated in daily standups and sprint planning ceremonies"
+      ],
+      "technologies": ["HTML", "CSS", "JavaScript", "WordPress", "PHP"]
+    }
+  ]
+}
