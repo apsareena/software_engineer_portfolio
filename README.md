@@ -18,18 +18,13 @@
 
 ## 📺 Demo
 
-<!-- ================================================================ -->
-<!--  REPLACE the block below with your own video / GIF / screenshot  -->
-<!--                                                                  -->
-<!--  Option A — YouTube thumbnail that links to your video:          -->
-<!--  [![Demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID) -->
-<!--                                                                  -->
-<!--  Option B — Drop a screen-recording GIF into /public/ and link:  -->
-<!--  ![Demo](./public/demo.gif)                                      -->
-<!-- ================================================================ -->
+### 🖥️ Desktop
 
-> 🎬 **Video coming soon** — a full walkthrough will be added here.
-> In the meantime, clone the repo and run it locally to see it in action!
+<video src="public/videos/website_1_screen_rec_desktop.mp4" controls width="100%"></video>
+
+### 📱 Mobile
+
+<video src="public/videos/website_1_screen_rec_phone.mp4" controls width="360"></video>
 
 </div>
 
