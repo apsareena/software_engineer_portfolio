@@ -1,0 +1,126 @@
+# webhook-probe.yaml
+#
+# THROWAWAY. Delete this file once the test is done — it has no place in
+# the real pipeline.
+#
+# Why it exists
+# -------------
+# Three things about workflow re-runs are unconfirmed, and all three change
+# how the webhook handlers get written (Linear KAP-7 and KAP-8). Guessing
+# means building the handlers twice. This workflow produces the real
+# deliveries needed to answer them.
+#
+#   1. Does the `workflow_job` webhook payload include `run_attempt`?
+#      The REST job object does not show it. If it is missing, the handler
+#      cannot tell attempt 1's job from attempt 2's job, because a re-run
+#      keeps the SAME GitHub run id.
+#
+#   2. Do job ids differ between attempts?
+#      `WorkflowJob.githubJobId` is unique on its own, which assumes they
+#      do. If ids were reused, attempt 2 would overwrite attempt 1 and that
+#      cost would vanish.
+#
+#   3. Does "Re-run failed jobs" send events for the jobs that did NOT
+#      re-run?
+#      GitHub's own screen shows all jobs under attempt 2, including the
+#      ones carried over untouched. If webhooks arrive for those too, we
+#      would count them twice and overstate the cost.
+#
+# How to run the test
+# -------------------
+#   1. Actions tab -> "Webhook probe (throwaway)" -> Run workflow.
+#   2. Wait. `linux-fails-first-time` will fail on purpose.
+#   3. Open the finished run -> "Re-run failed jobs" (NOT "Re-run all
+#      jobs" — re-running only the failed one is what question 3 tests).
+#   4. GitHub App settings for kaptimus-dev -> Advanced -> Recent
+#      Deliveries. Read the `workflow_job` deliveries from both attempts.
+#
+# What to look for
+# ----------------
+#   Q1  Search a job payload for "run_attempt".
+#   Q2  Compare `workflow_job.id` on attempt 1 against attempt 2.
+#   Q3  Count the `workflow_job` completed deliveries after the re-run.
+#       One  -> only the re-run job sent events. Correct as designed.
+#       Three -> the carried-over jobs sent events too. The handler must
+#                then ignore any job whose `started_at` is earlier than
+#                that attempt's own start time.
+#
+# The failing job deliberately takes a DIFFERENT amount of time on attempt
+# 1 than on later attempts. That is the fourth thing this proves: two
+# attempts of one run do not cost the same, so cost has to be worked out
+# per attempt and never by multiplying.
+#
+# Cost of running this: roughly 5 minutes against the monthly free
+# allowance (Windows minutes count double). Out of 2,000. Not a concern.
+#
+# Note: `github.run_attempt` is expected to be 1 on the first run and to go
+# up by one on each re-run. Every job below prints it, so if it does not
+# behave that way, the output will say so plainly rather than hiding it.
+
+name: Webhook probe (throwaway)
+
+# Manual only. This must never run on a push.
+on:
+  workflow_dispatch:
+
+jobs:
+  # A plain passing Linux job. Gives a baseline `labels` value of
+  # ["ubuntu-latest"] to compare against.
+  linux-pass:
+    name: linux-pass
+    runs-on: ubuntu-latest
+    steps:
+      - name: Which attempt is this
+        run: echo "run_attempt = ${{ github.run_attempt }}"
+      - name: Use about 20 seconds
+        run: sleep 20
+
+  # Added 2026-09-05. `ubuntu-slim` is the 1-core runner at $0.002 a minute,
+  # a third the price of ubuntu-latest. Its label was added to the rate table
+  # on 2026-09-01 from GitHub's documentation and has NEVER been seen in a
+  # real payload — so this job is the only thing that proves it is real,
+  # billable, and priced correctly.
+  #
+  # It runs in a container rather than a full machine, with a small set of
+  # tools and no elevated privileges. `echo` and `sleep` are fine.
+  linux-slim-pass:
+    name: linux-slim-pass
+    runs-on: ubuntu-slim
+    steps:
+      - name: Which attempt is this
+        run: echo "run_attempt = ${{ github.run_attempt }}"
+      - name: Use about 20 seconds
+        run: sleep 20
+
+  # A second operating system in the SAME run. This is what proves the cost
+  # has to be split per operating system, and it is the case Linear KAP-46
+  # is about.
+  windows-pass:
+    name: windows-pass
+    runs-on: windows-latest
+    steps:
+      - name: Which attempt is this
+        run: echo "run_attempt = ${{ github.run_attempt }}"
+      - name: Use about 20 seconds
+        shell: pwsh
+        run: Start-Sleep -Seconds 20
+
+  # The important one. Fails on attempt 1 so that "Re-run failed jobs"
+  # becomes available, then passes on attempt 2 — and takes noticeably
+  # longer doing it, so the two attempts have clearly different costs.
+  linux-fails-first-time:
+    name: linux-fails-first-time
+    runs-on: ubuntu-latest
+    steps:
+      - name: Which attempt is this
+        run: echo "run_attempt = ${{ github.run_attempt }}"
+      - name: Fail the first time, pass later, with different durations
+        run: |
+          if [ "${{ github.run_attempt }}" = "1" ]; then
+            echo "Attempt 1: using about 10 seconds, then failing on purpose."
+            sleep 10
+            exit 1
+          else
+            echo "Attempt ${{ github.run_attempt }}: using about 40 seconds, then passing."
+            sleep 40
+          fi
