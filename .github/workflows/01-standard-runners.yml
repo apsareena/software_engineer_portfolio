@@ -29,24 +29,34 @@ jobs:
       fail-fast: false
       matrix:
         runner:
-          # Linux x64
+          # Linux 1-core x64 — actions_linux_slim — $0.002
+          # CONFIRMED REAL on 2026-09-12. It was our one invented label.
+          - ubuntu-slim
+          # Linux 2-core x64 — actions_linux — $0.006
           - ubuntu-latest
           - ubuntu-24.04
           - ubuntu-22.04
-          # Linux arm64
+          - ubuntu-26.04            # public preview
+          # Linux 2-core arm64 — actions_linux_arm — $0.005
           - ubuntu-24.04-arm
           - ubuntu-22.04-arm
-          # Windows x64
+          - ubuntu-26.04-arm        # public preview
+          # Windows 2-core x64 — actions_windows — $0.010
           - windows-latest
           - windows-2025
           - windows-2022
-          # Windows arm64
+          # Windows 2-core arm64 — actions_windows_arm — $0.010
           - windows-11-arm
-          # macOS
-          - macos-latest
-          - macos-15
-          - macos-14
+          - windows-11-vs2026-arm
+          # macOS 4-core Intel — actions_macos — $0.062
           - macos-15-intel
+          - macos-26-intel
+          # macOS 3-core M1 arm64 — actions_macos — $0.062
+          - macos-latest
+          - macos-14
+          - macos-15
+          - macos-26
+          - xcode-27                # public preview
     steps:
       - name: Say what this is
         shell: bash
@@ -57,14 +67,25 @@ jobs:
           echo "name         : $RUNNER_NAME"
           echo "environment  : $RUNNER_ENVIRONMENT"
 
-  # QUESTION 4 from the plan: what is the label for the 1-core Linux runner,
-  # billing SKU actions_linux_slim at $0.002 a minute? We guessed
-  # "ubuntu-slim" and have never seen it work. If this job fails to start,
-  # the guess is wrong and the rate table has an entry that can never match.
-  slim-guess:
-    name: slim label guess
-    runs-on: ubuntu-slim
-    continue-on-error: true
-    timeout-minutes: 5
-    steps:
-      - run: echo "If this ran, ubuntu-slim is a real label."
+  # QUESTION 4 IS CLOSED. `ubuntu-slim` ran on 2026-09-12 and is now in the
+  # matrix above with everything else. The separate "is this label even real"
+  # job that used to sit here has been deleted.
+  #
+  # WHAT CHANGED ON 2026-09-12, and why it is worth reading before editing
+  # this list again.
+  #
+  # This file started with 13 labels. GitHub's own runner table lists TWENTY.
+  # Apsareena checked the documentation against the file and found the gap —
+  # *"only 13 runners? here in the documentation i see more right?"* — and she
+  # was right. Six were missing: ubuntu-26.04, ubuntu-26.04-arm,
+  # windows-11-vs2026-arm, macos-26, macos-26-intel and xcode-27.
+  #
+  # Our RATE TABLE already had all twenty. Only the test was short. So the
+  # lesson is not "the table was wrong", it is: **a test built from a list is
+  # only as complete as the list was on the day it was written.** GitHub adds
+  # runner labels; the public-preview ones especially.
+  #
+  # When re-reading GitHub's table, count the rows against
+  # `STANDARD_RUNNER_RATES` in src/lib/cost/pricing-data.ts. They should match
+  # in BOTH directions. As of 2026-09-12 the only entry we hold that GitHub no
+  # longer lists is `windows-2025-vs2026` — harmless, it simply never matches.
