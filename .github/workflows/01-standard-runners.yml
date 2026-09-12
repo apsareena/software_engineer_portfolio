@@ -1,0 +1,70 @@
+# 01-standard-runners.yml
+#
+# Copy to .github/workflows/ in a test repository, then run it by hand from
+# the Actions tab (it only has workflow_dispatch, so it never runs on a push).
+#
+# One job per standard runner label. Each does nothing except print what it
+# is, so every job is a few seconds long and every one still costs a whole
+# minute — which is the rounding rule we want to see in the payload anyway.
+#
+# `fail-fast: false` matters. Without it, one unavailable runner cancels the
+# rest of the matrix and you lose the whole capture.
+#
+# `continue-on-error: true` matters for the same reason. Some of these labels
+# may not exist any more, or may not be available to your plan. We WANT to
+# see what happens then — a job that never starts is dimension E6.
+
+name: Probe · standard runners
+
+on:
+  workflow_dispatch:
+
+jobs:
+  standard:
+    name: ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
+    continue-on-error: true
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          # Linux x64
+          - ubuntu-latest
+          - ubuntu-24.04
+          - ubuntu-22.04
+          # Linux arm64
+          - ubuntu-24.04-arm
+          - ubuntu-22.04-arm
+          # Windows x64
+          - windows-latest
+          - windows-2025
+          - windows-2022
+          # Windows arm64
+          - windows-11-arm
+          # macOS
+          - macos-latest
+          - macos-15
+          - macos-14
+          - macos-15-intel
+    steps:
+      - name: Say what this is
+        shell: bash
+        run: |
+          echo "runner label : ${{ matrix.runner }}"
+          echo "os           : $RUNNER_OS"
+          echo "arch         : $RUNNER_ARCH"
+          echo "name         : $RUNNER_NAME"
+          echo "environment  : $RUNNER_ENVIRONMENT"
+
+  # QUESTION 4 from the plan: what is the label for the 1-core Linux runner,
+  # billing SKU actions_linux_slim at $0.002 a minute? We guessed
+  # "ubuntu-slim" and have never seen it work. If this job fails to start,
+  # the guess is wrong and the rate table has an entry that can never match.
+  slim-guess:
+    name: slim label guess
+    runs-on: ubuntu-slim
+    continue-on-error: true
+    timeout-minutes: 5
+    steps:
+      - run: echo "If this ran, ubuntu-slim is a real label."
